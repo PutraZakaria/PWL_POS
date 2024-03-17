@@ -322,6 +322,12 @@ return [
             'label' => 4,
             'label_color' => 'success',
         ],
+        //  Praktikum 5-Soal 2
+        [
+            'text' => 'Manage Kategori',
+            'url' => 'kategori',
+            'icon' => 'far fa-fw fa-folder',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
