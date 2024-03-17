@@ -34,22 +34,28 @@ class KategoriController extends Controller
         // return view('kategori', ['data' => $data]);
 
     }
+
+    public function destroy($id)
+    {
+        $data = m_kategori::find($id);
+        $data->delete();
+        return redirect("/kategori")->with('success', 'Kategori berhasil dihapus.');
+    }
+
     public function update(Request $request, $id)
     {
         m_kategori::find($id)->update([
             'kategori_kode' => $request->kategori_kode,
-            'kategori_nama' => $request->kategori_nama
+            'kategori_nama' => $request->kategori_nama,
         ]);
 
         return redirect("/kategori");
     }
 
-
     public function edit($id)
     {
         $data = m_kategori::find($id);
         return view('kategori.edit', ['data' => $data]);
-
     }
 
     public function create()

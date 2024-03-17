@@ -21,7 +21,11 @@ class KategoriDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($data) {
-                return '<a href="../public/kategori/edit/'.$data->kategori_id.'" class="btn btn-sm btn-primary">Edit</a>';
+                return  '<div class="btn-group">'.
+                        '<a href="../public/kategori/edit/'.$data->kategori_id.'" class="btn btn-sm btn-primary ">Edit</a>'.
+                        '<a href="../public/kategori/delete/'.$data->kategori_id.'" class="btn btn-sm btn-danger ml-1"
+                        onclick="return confirm(\'Apakah Anda yakin ingin menghapus kategori ini?\')">Delete</a>'.
+                        '</div>';
             })
             ->setRowId('id');
     }
