@@ -1,16 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\DataTables\KategoriDataTable;
 use App\Models\m_kategori;
-
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
 
 class KategoriController extends Controller
 {
-    public function index(KategoriDataTable $dataTable){
+    public function index(KategoriDataTable $dataTable)
+    {
         return $dataTable->render('kategori.index');
 
         // Insert
@@ -34,6 +33,22 @@ class KategoriController extends Controller
         // $data = DB::table('m_kategoris')->get();
         // return view('kategori', ['data' => $data]);
 
+    }
+    public function update(Request $request, $id)
+    {
+        m_kategori::find($id)->update([
+            'kategori_kode' => $request->kategori_kode,
+            'kategori_nama' => $request->kategori_nama
+        ]);
+
+        return redirect("/kategori");
+    }
+
+
+    public function edit($id)
+    {
+        $data = m_kategori::find($id);
+        return view('kategori.edit', ['data' => $data]);
 
     }
 
