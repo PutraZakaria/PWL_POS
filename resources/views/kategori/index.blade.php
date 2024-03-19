@@ -12,7 +12,9 @@
             <div class="card_header"></div>
             <div class="card-body">
                 {{-- Praktikum 5-Soal 1 --}}
-                <a href="{{ url('kategori/create') }}" class="btn btn-primary" style="float: right">Add</a>
+                <form action="{{ url('kategori/create') }}">
+                    <button class="btn btn-primary" style="float: right">Add</button>
+                </form>
                 {{$dataTable->table()}}
             </div>
         </div>
