@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\UserModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -188,6 +190,21 @@ class UserController extends Controller
         $user = UserModel::find($id);
         $user->delete();
 
+        return redirect('/user');
+    }
+
+    public function store(StorePostRequest $request): RedirectResponse
+    {
+        //The invoming request is valid...
+
+        //Retrieve the validate input data...
+        $validated = $request->validated();
+
+        // Retrieve a portion  of the validated input data...
+        $validated = $request->safe()->only(['username', 'nama', 'password', 'level_id']);
+        $validated = $request->safe()->except(['username', 'nama', 'password', 'level_id']);
+
+        // Store the post...
         return redirect('/user');
     }
 }
