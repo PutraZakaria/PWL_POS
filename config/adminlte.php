@@ -340,7 +340,7 @@ return [
         ],
         [
             'text' => 'Manage User',
-            'url' => 'user',
+            'url' => 'm_user',
             'icon' => 'bi bi-person',
         ],
         // ['header' => 'account_settings'],

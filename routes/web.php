@@ -45,3 +45,6 @@ Route::put('/kategori/update/{id}', [KategoriController::class, 'update']);
 Route::get('/kategori/delete/{id}', [KategoriController::class, 'destroy']);
 
 Route::resource('m_user', POSController::class);
+
+Route::put('/level/edit/{id}', [LevelController::class, 'edit']);
+Route::get('/level/delete/{id}', [LevelController::class, 'destroy']);

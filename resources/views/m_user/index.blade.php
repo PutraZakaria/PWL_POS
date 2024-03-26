@@ -1,4 +1,4 @@
-@extends('m_user/template')
+@extends('layouts.app')
 
 @section('content')
     <div class="row mt-5 mb-5">
@@ -25,6 +25,7 @@
         <th width="200px" class="text-center">Username</th>
         <th width="200px" class="text-center">Nama</th>
         <th width="150px" class="text-center">Password</th>
+        <th width="150px" class="text-center">Action</th>
     </tr>
     @foreach ($useri as $m_user)
 
@@ -47,3 +48,4 @@
     </tr>
     @endforeach
 </table>
+@endsection
