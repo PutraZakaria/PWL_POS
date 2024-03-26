@@ -1,12 +1,29 @@
-@extends('layouts.app')
+@extends('layouts.template')
+
+@section('content')
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Halo, apakabar!!!</h3>
+        <div class="card-tools"></div>
+    </div>
+    <div class="card-body">
+        Selamat datang semua, ini adalah halaman utama dari aplikasi ini.
+    </div>
+</div>
+
+@endsection
+
+
+
 
 {{-- Customize layout sections --}}
-@section('subtitle', 'Kategori')
+{{-- @section('subtitle', 'Kategori')
 @section('content_header_title', 'User dan Level')
-@section('content_header_subtitle', 'Tambah')
+@section('content_header_subtitle', 'Tambah') --}}
 
 {{-- Content body: main page content --}}
-@section('content')
+{{-- @section('content')
     <div class="container">
         <div class="card card-primary">
             <div class="card-header">
@@ -60,7 +77,7 @@
             </form>
         </div>
     </div>
-@endsection
+@endsection --}}
 
 
 {{-- @extends('adminlte::page')
