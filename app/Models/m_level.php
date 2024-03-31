@@ -11,9 +11,10 @@ class m_level extends Model
     use HasFactory;
     protected $table = "m_levels";
     protected $primaryKey = "level_id";
+    protected $keyType = 'int';
 
     public function users(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(UserModel::class, 'level_id', 'level_id');
     }
 }
