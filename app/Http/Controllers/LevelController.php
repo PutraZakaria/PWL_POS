@@ -2,74 +2,123 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePostRequest;
-use Illuminate\Http\Request;
 use App\Models\m_level;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class LevelController extends Controller
 {
     public function index()
     {
-        // DB FACADE
-        // Insert
-        // DB::insert('insert into m_levels(level_kode, level_nama, created_at) values(?,?,?)', ['CUS', 'Pelanggan', now()]);
-        // return 'Insert data baru berhasil';
+        $breadcrumb = (object) [
+            'title' => 'Daftar Level',
+            'list' => ['Home', 'Level'],
+        ];
 
-        // Update
-        // $row = DB::update('update m_levels set level_nama = ? where level_kode = ?', ['Customer','CUS']);
-        // return 'Update data berhasil. Jumlah data yang diupdate: '.$row.' baris';
+        $page = (object) [
+            'title' => 'Daftar level yang terdaftar dalam sistem',
+        ];
 
-        // Delete
-        // $row = DB::delete('delete from m_levels where level_kode = ?', ['CUS']);
-        // return 'Delete data berhasil. Jumlah data yang dihapus: '.$row.' baris';
+        $activeMenu = 'level';
 
-        // Select
-        $data = DB::select('select * from m_levels');
-        return view('m_level.index', ['data' => $data]);
+        return view('level.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
     }
 
-    public function store(StorePostRequest $request): RedirectResponse
+    public function list(Request $request)
     {
-        //The invoming request is valid...
+        $levels = m_level::select('level_id', 'level_kode', 'level_nama');
 
-        //Retrieve the validate input data...
-        $validated = $request->validated();
-
-        // Retrieve a portion  of the validated input data...
-        $validated = $request->safe()->only(['level_kode', 'level_nama']);
-        $validated = $request->safe()->except(['level_kode', 'level_nama']);
-
-        // Store the post...
-        return redirect('/level');
+        return DataTables::of($levels)
+            ->addColumn('aksi', function ($level) { // menambahkan kolom aksi
+                $btn = '<a href="' . url('/level/' . $level->level_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
+                $btn .= '<form class="d-inline-block" method="POST" action="' . url('/level/' . $level->level_id) . '">'
+                . csrf_field() . method_field('DELETE') .
+                    '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
+                return $btn;
+            })
+            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
+            ->make(true);
     }
 
     public function destroy(string $id)
     {
-        $useri = m_level::findOrFail($id)->delete();
-        return \redirect()->route('m_level.index')
-            ->with('success', 'data Berhasil Dihapus');
+        $check = m_level::find($id);
+        if (!$check) {
+            return redirect('/level')->with('success', 'Data user berhasil dihapus');
+        }
+
+        try {
+            m_level::destroy($id);
+
+            return redirect('/level')->with('success', 'Data user berhasil dihapus');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect('/level')->with('error', 'Data user gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
+        }
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'level_kode'    => 'required',
+            'level_nama'    => 'required',
+        ]);
+
+        m_level::create([
+            'level_kode'    => $request->level_kode,
+            'level_nama'    => $request->level_nama,
+        ]);
+
+        return redirect('/level')->with('success', 'Data user berhasil ditambahkan');
     }
 
     public function edit(string $id)
     {
         $level = m_level::find($id);
-        return view('m_level.edit', ['data' => $level]);
+
+        $breadcrumb = (object)[
+            'title' => 'Edit Level',
+            'list' => ['Home', 'Level', 'Edit']
+        ];
+
+        $page = (object)[
+            'title' => 'Edit level'
+        ];
+
+        $activeMenu = 'level';
+
+        return view('level.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
     }
 
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'level_id' => 'required',
-            'level_kode' => 'required',
-            'level_nama' => 'required',
+            'level_kode'    => 'required',
+            'level_nama'    => 'required',
         ]);
 
-        // fungsi eloquent untuk mengupdate data inputan kita
-        m_level::find($id)->update($request->all());
-        // jika data berhasil diupdate, akan kembali ke halaman utama
-        return redirect()->route('m_level.index')
-            ->with('success', 'Data Berhasil Diupdate');
+        m_level::find($id)->update([
+            'level_kode'    => $request->level_kode,
+            'level_nama'    => $request->level_nama,
+        ]);
+
+        return redirect('/level')->with('success', 'Data level berhasil diubah');
+    }
+
+    public function create()
+    {
+        $breadcrumb = (object) [
+            'title' => 'Tambah Level',
+            'list' => ['Home', 'Level', 'Tambah']
+        ];
+
+        $page = (object) [
+            'title' => 'Tambah level baru'
+        ];
+
+        $activeMenu = 'level';
+
+        return view('level.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
     }
 }
