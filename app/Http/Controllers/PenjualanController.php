@@ -44,13 +44,12 @@ class PenjualanController extends Controller
     {
         $penjualans = m_penjualan::select('penjualan_id', 'pembeli', 'penjualan_kode', 'penjualan_tanggal', 'user_id')
         ->with('user');
-        $barang = m_barang::all();
 
         if ($request->user_id) {
             $penjualans->where('user_id', $request->user_id);
         }
 
-        return DataTables::of($penjualans, $barang)
+        return DataTables::of($penjualans)
             ->addColumn('aksi', function ($penjualan) { // menambahkan kolom aksi
                 $btn = '<a href="' . url('/penjualan/' . $penjualan->penjualan_id) . '" class="btn btn-info btn-sm">Detail</a> ';
                 $btn .= '<a href="' . url('/penjualan/' . $penjualan->penjualan_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
