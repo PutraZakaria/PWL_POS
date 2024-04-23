@@ -30,9 +30,9 @@ class LevelController extends Controller
         return m_level::find($level);
     }
 
-    public function destroy(m_level $user)
+    public function destroy(m_level $level)
     {
-        $user->delete();
+        $level->delete();
 
         return response()->json([
             'success' => true,
