@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BarangController;
 use App\Http\Controllers\Api\KategoriController;
+use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\LevelController;
 
@@ -45,12 +46,20 @@ Route::get('kategoris/{kategori}', [KategoriController::class, 'show']);
 Route::put('kategoris/{kategori}', [KategoriController::class, 'update']);
 Route::delete('kategoris/{kategori}', [KategoriController::class, 'destroy']);
 
-// User
+// Users
 Route::get('users', [UserController::class, 'index']);
 Route::post('users', [UserController::class, 'store']);
 Route::get('users/{user}', [UserController::class, 'show']);
 Route::put('users/{user}', [UserController::class, 'update']);
 Route::delete('users/{user}', [UserController::class, 'destroy']);
+
+// User
+Route::get('user', [UsersController::class, 'index']);
+Route::post('user', [UsersController::class, 'store']);
+Route::get('user/{user}', [UsersController::class, 'show']);
+Route::put('user/{user}', [UsersController::class, 'update']);
+Route::delete('user/{user}', [UsersController::class, 'destroy']);
+
 
 // Level
 Route::get('levels', [LevelController::class, 'index']);
