@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 'username' => 'admin',
                 'nama' => 'Administrator',
                 'password' => Hash::make('12345'),
+                'image' => 'aaaaaa',
             ],
             [
                 'user_id' => 2,
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
                 'username' => 'manager',
                 'nama' => 'Manager',
                 'password' => Hash::make('12345'),
+                'image' => 'aaaaaa',
             ],
             [
                 'user_id' => 3,
@@ -35,6 +37,7 @@ class UserSeeder extends Seeder
                 'username' => 'staff',
                 'nama' => 'Staff/Kasir',
                 'password' => Hash::make('12345'),
+                'image' => 'aaaaaa',
             ],
         ];
         DB::table('m_users')->insert($data);

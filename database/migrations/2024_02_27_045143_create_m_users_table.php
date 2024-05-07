@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('useri', function (Blueprint $table) {
+        Schema::create('m_users', function (Blueprint $table) {
             $table->id('user_id');
             $table->unsignedBigInteger('level_id')->index(); //Indexing untuk ForeignKey
             $table->string('username',20)->unique(); //unique untuk memastikan tidak ada yang sama
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('useri');
+        Schema::dropIfExists('m_users');
     }
 };

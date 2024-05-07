@@ -3,13 +3,14 @@
 namespace App\Models;
 
 // use App\Models\m_level;
+
+// use Attribute;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-// use Illuminate\Contracts\Auth\Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class UserModel extends Authenticatable implements JWTSubject
 {
@@ -21,10 +22,11 @@ class UserModel extends Authenticatable implements JWTSubject
     protected $fillable =
         [
         'user_id',
-        'level_id',
         'username',
         'nama',
         'password',
+        'level_id',
+        'image',
     ];
 
     public function level(): BelongsTo
@@ -42,20 +44,20 @@ class UserModel extends Authenticatable implements JWTSubject
         return $this->hasMany(m_stok::class, 'user_id', 'user_id');
     }
 
-    public function getJWTIdentifier(){
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
     }
 
-    public function getJWTCustomClaims(){
+    public function getJWTCustomClaims()
+    {
         return [];
     }
 
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn($image) => url('/storage/posts/' . $image),
+        );
+    }
 }
-
-// class BarangModel extends Model
-// {
-//     public function kategori(): BelongsTo
-//     {
-//         return $this->belongsTo(m_kategori::class, 'kategori_id', 'kategori_id');
-//     }
-// }
