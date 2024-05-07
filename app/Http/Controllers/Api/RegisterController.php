@@ -23,12 +23,14 @@ class RegisterController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
+        $image = $request->image;
+
         $user = UserModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
             'password' => bcrypt($request->password),
             'level_id' => $request->level_id,
-            'image' => $request->image
+            'image' => $image->hashName(),
         ]);
 
         if ($user) {

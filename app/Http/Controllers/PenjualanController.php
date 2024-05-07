@@ -82,31 +82,32 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
-            'pembeli' => 'required',
             'penjualan_kode' => 'required',
+            'pembeli' => 'required',
             'penjualan_tanggal' => 'required',
             'user_id' => 'required',
         ]);
 
-        m_penjualan::create([
-            'pembeli' => $request->pembeli,
+        $penjualan = m_penjualan::create([
             'penjualan_kode' => $request->penjualan_kode,
+            'pembeli' => $request->pembeli,
             'penjualan_tanggal' => $request->penjualan_tanggal,
             'user_id' => $request->user_id,
         ]);
 
         // Simpan detail barang jika ada
-        if ($request->has('barang_nama') && $request->has('harga') && $request->has('jumlah')) {
-            $barang_nama = $request->barang_nama;
-            $harga = $request->harga;
-            $jumlah = $request->jumlah;
+        if ($request->barang_id && $request->jumlah ) {
+            foreach ($request->barang_id as $key => $barang_id) {
+                $barang = m_barang::find($barang_id);
+                $harga = $barang->harga_jual;
 
-            foreach ($barang_nama as $key => $value) {
                 m_penjualan_detail::create([
-                    'barang_id' => $value,
-                    'harga' => $harga[$key],
-                    'jumlah' => $jumlah[$key],
+                    'penjualan_id' => $penjualan->penjualan_id,
+                    'barang_id' => $barang_id,
+                    'harga' => $harga,
+                    'jumlah' => $request->jumlah[$key],
                 ]);
             }
         }

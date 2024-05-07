@@ -35,13 +35,13 @@
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label">Petugas</label>
                     <div class="col-11">
-                        <select class="form-control" id="petugas_id" name="petugas_id" required>
+                        <select class="form-control" id="user_id" name="user_id" required>
                             <option value="">- Pilih Petugas -</option>
                             @foreach ($user as $usr)
-                                <option value="{{ $usr->id }}">{{ $usr->nama }}</option>
+                                <option value="{{ $usr->user_id }}">{{ $usr->nama }}</option>
                             @endforeach
                         </select>
-                        @error('petugas_id')
+                        @error('user_id')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -71,10 +71,10 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <select name="barang_nama[]" class="form-control">
-                                            <option value="">- Pilih Nama Barang -</option>
+                                        <select name="barang_id[]" class="form-control">
+                                            <option value="" disabled>- Pilih Nama Barang -</option>
                                             @foreach ($barang as $brg)
-                                                <option value="{{ $brg->id }}">{{ $brg->barang_nama }}</option>
+                                                <option value="{{ $brg->barang_id }}">{{ $brg->barang_nama }}</option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -106,7 +106,7 @@
         $(document).ready(function() {
             $('#add_row').click(function() {
                 var html = '<tr>' +
-                    '<td><select name="barang_nama[]" class="form-control"><option value="">- Pilih Nama Barang -</option>@foreach ($barang as $brg)<option value="{{ $brg->id }}">{{ $brg->barang_nama }}</option>@endforeach</select></td>' +
+                    '<td><select name="barang_id[]" class="form-control"><option>- Pilih Nama Barang -</option>@foreach ($barang as $brg)<option value="{{ $brg->barang_id }}">{{ $brg->barang_nama }}</option>@endforeach</select></td>' +
                     '<td><input type="number" name="jumlah[]" class="form-control"></td></tr>';
                 $('#detail_barang_table').append(html);
             });
