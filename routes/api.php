@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\LevelController;
+use App\Http\Controllers\Api\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,13 @@ Route::post('barangs', [BarangController::class, 'store']);
 Route::get('barangs/{barang}', [BarangController::class, 'show']);
 Route::put('barangs/{barang}', [BarangController::class, 'update']);
 Route::delete('barangs/{barang}', [BarangController::class, 'destroy']);
+
+// Transaksi
+Route::get('transactions', [TransaksiController::class, 'index']);
+Route::post('transactions', [TransaksiController::class, 'store']);
+Route::get('transactions/{transaction}', [TransaksiController::class, 'show']);
+Route::put('transactions/{transaction}', [TransaksiController::class, 'update']);
+Route::delete('transactions/{transaction}', [TransaksiController::class, 'destroy']);
 
 // Kategori
 Route::get('kategoris', [KategoriController::class, 'index']);

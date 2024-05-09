@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class m_penjualan extends Model
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
+class m_penjualan extends Model implements JWTSubject
 {
     use HasFactory;
     protected $table = "m_penjualans";
@@ -20,7 +23,25 @@ class m_penjualan extends Model
         'pembeli',
         'penjualan_kode',
         'penjualan_tanggal',
-        ];
+        'image',
+    ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn($image) => url('/storage/posts/' . $image),
+        );
+    }
 
     public function user(): BelongsTo
     {

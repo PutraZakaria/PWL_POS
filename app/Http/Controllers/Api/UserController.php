@@ -19,7 +19,7 @@ class UserController extends Controller
         return response()->json($user, 201);
     }
 
-    public function show(UserModel $user)
+    public function show($user)
     {
         return UserModel::find($user);
     }

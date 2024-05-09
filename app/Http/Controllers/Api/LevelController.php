@@ -19,7 +19,7 @@ class LevelController extends Controller
         return response()->json($level, 201);
     }
 
-    public function show(m_level $level)
+    public function show($level)
     {
         return m_level::find($level);
     }

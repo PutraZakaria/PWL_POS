@@ -19,7 +19,7 @@ class KategoriController extends Controller
         return response()->json($kategori, 201);
     }
 
-    public function show(m_kategori $kategori)
+    public function show($kategori)
     {
         return m_kategori::find($kategori);
     }

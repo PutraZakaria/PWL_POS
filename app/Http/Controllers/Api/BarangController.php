@@ -19,7 +19,7 @@ class BarangController extends Controller
         return response()->json($barang, 201);
     }
 
-    public function show(m_barang $barang)
+    public function show($barang)
     {
         return m_barang::find($barang);
     }
